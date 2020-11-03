@@ -10,7 +10,14 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "target": "es5",
-    "jsx": "react"
+    "jsx": "react",
+    "baseUrl": ".",
+    "rootDir": ".",
+    "paths": {
+      "ui/*": [
+        "app/ui/*"
+      ],
+    }
   },
   "exclude": [
     "**/*.spec.ts",
