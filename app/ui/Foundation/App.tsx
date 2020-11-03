@@ -1,6 +1,5 @@
 import React from "react";
 
-import "@shopify/polaris/dist/styles.css";
 import enTranslations from "@shopify/polaris/locales/en.json";
 import { AppProvider, Page } from "@shopify/polaris";
 import { OrderForm } from "ui/OrderForm";
