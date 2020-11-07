@@ -83,6 +83,10 @@ GEM
     ffi (1.13.1)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    graphiql-rails (1.7.0)
+      railties
+      sprockets-rails
+    graphql (1.11.6)
     httparty (0.18.1)
       mime-types (~> 3.0)
       multi_xml (>= 0.5.2)
@@ -219,6 +223,8 @@ DEPENDENCIES
   byebug
   capybara (>= 2.15)
   dotenv-rails
+  graphiql-rails
+  graphql
   httparty
   jbuilder (~> 2.7)
   listen (~> 3.2)
