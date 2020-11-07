@@ -4495,6 +4495,11 @@ graphql-tool-utilities@^1.2.0:
     core-js "^2.0.0"
     graphql ">=14.5.0 <15.0.0"
 
+graphql-typed@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/graphql-typed/-/graphql-typed-0.6.0.tgz#22482dd1305a717d6fcc5a8967674c47045d7e67"
+  integrity sha512-vGN+GulPFNkFeoCwTSytJCslEmHGBKLtMpAFO2P13eKYtyEgPMSlat19ZLzTod6DMmh1hXeBglgpm5OVjGUd5Q==
+
 graphql-typescript-definitions@^0.21.0:
   version "0.21.0"
   resolved "https://registry.yarnpkg.com/graphql-typescript-definitions/-/graphql-typescript-definitions-0.21.0.tgz#2b5cb5a97da58e93fc2d1a22c575f290a9c4af40"
@@ -4517,12 +4522,12 @@ graphql-typescript-definitions@^0.21.0:
     upper-case-first "^2.0.1"
     yargs "^15.3.1"
 
-"graphql@14.0.2 - 14.2.0 || ^14.3.1 || ^15.0.0", graphql@^15.4.0:
+"graphql@14.0.2 - 14.2.0 || ^14.3.1 || ^15.0.0":
   version "15.4.0"
   resolved "https://registry.yarnpkg.com/graphql/-/graphql-15.4.0.tgz#e459dea1150da5a106486ba7276518b5295a4347"
   integrity sha512-EB3zgGchcabbsU9cFe1j+yxdzKQKAbGUWRb13DsrsMN1yyfmmIq+2+L5MqVWcDCE4V89R5AyUOi7sMOGxdsYtA==
 
-"graphql@>=14.5.0 <15.0.0":
+"graphql@>=14.5.0 <15.0.0", graphql@^14.0.0:
   version "14.7.0"
   resolved "https://registry.yarnpkg.com/graphql/-/graphql-14.7.0.tgz#7fa79a80a69be4a31c27dda824dc04dac2035a72"
   integrity sha512-l0xWZpoPKpppFzMfvVyFmp9vLN7w/ZZJPefUicMCepfJeQ8sMcztloGYY9DfjVPo6tIUDzU5Hw3MUbIjj9AVVA==
