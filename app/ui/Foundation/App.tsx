@@ -4,10 +4,27 @@ import enTranslations from "@shopify/polaris/locales/en.json";
 import { AppProvider, Page } from "@shopify/polaris";
 import { OrderForm } from "ui/OrderForm";
 
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  HttpLink,
+} from "@apollo/client";
+
+const xCSRFfToken = document.querySelector<HTMLMetaElement>(
+  "meta[name=csrf-token]"
+);
+
+const link = new HttpLink({
+  uri: "/graphql",
+  credentials: "same-origin",
+  headers: {
+    "X-CSRF-Token": xCSRFfToken ? xCSRFfToken.content : "",
+  },
+});
 
 const client = new ApolloClient({
-  uri: "/graphql",
+  link,
   cache: new InMemoryCache(),
 });
 
