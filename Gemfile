@@ -58,4 +58,4 @@ gem 'httparty'
 gem 'pry-rails'
 gem "graphql"
 
-gem 'graphiql-rails', group: :development
+gem 'graphiql-rails'
