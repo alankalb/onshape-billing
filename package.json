@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "types": "graphql-typescript-definitions --schema-types-path app/ui/graphql/types",
-    "check-files": "yarn install --check-files"
+    "check-files": "yarn install --check-files",
+    "start": "foreman start -f Procfile.dev"
   },
   "dependencies": {
     "@apollo/client": "^3.2.5",
