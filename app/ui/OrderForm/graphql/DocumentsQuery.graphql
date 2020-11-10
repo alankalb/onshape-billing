@@ -1,6 +1,0 @@
-query Documents {
-  documents {
-    id
-    name
-  }
-}

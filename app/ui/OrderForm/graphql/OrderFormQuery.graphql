@@ -1,0 +1,10 @@
+query OrderForm {
+  documents {
+    id
+    name
+  }
+  customers {
+    id
+    name
+  }
+}
