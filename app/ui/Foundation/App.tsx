@@ -32,7 +32,7 @@ export default function App() {
   return (
     <ApolloProvider client={client}>
       <AppProvider i18n={enTranslations}>
-        <Page title="Billify">
+        <Page>
           <OrderForm />
         </Page>
       </AppProvider>
