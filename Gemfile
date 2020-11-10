@@ -59,3 +59,4 @@ gem 'pry-rails'
 gem "graphql"
 
 gem 'graphiql-rails'
+gem 'shopify_api'
