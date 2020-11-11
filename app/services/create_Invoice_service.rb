@@ -16,7 +16,6 @@ class CreateInvoiceService < ApplicationService
 
     add_line_items
     add_customer
-    add_metafields
 
     if draft_order.save
       invoice = draft_order.send_invoice
@@ -36,18 +35,13 @@ class CreateInvoiceService < ApplicationService
       {
         title: document_name,
         price: price,
-        quantity: 1
-      }
-    ]
-  end
-
-  def add_metafields
-    draft_order.metafields = [ 
-      {
-        namespace: "onshape",
-        key: "document",
-        value: document_id,
-        value_type: "string"
+        quantity: 1,
+        properties: [
+          {
+            name: "Onshape Document",
+            value: "https://cad.onshape.com/documents/" + document_id
+          }
+        ]
       }
     ]
   end
