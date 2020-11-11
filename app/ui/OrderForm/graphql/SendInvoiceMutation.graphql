@@ -1,0 +1,17 @@
+mutation SendInvoice(
+  $documentName: String!
+  $documentId: String!
+  $price: String!
+  $customerId: String!
+) {
+  sendInvoive(
+    input: {
+      documentId: $documentId
+      documentName: $documentName
+      price: $price
+      customerId: $customerId
+    }
+  ) {
+    draftId
+  }
+}

@@ -14,7 +14,5 @@ module Types
     def customers
       CustomersService.execute
     end
-
-
   end
 end

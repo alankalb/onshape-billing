@@ -24,7 +24,6 @@ module Mutations
       else
         return {
           draft_order: null
-          order_id: null
         }
       end
     end

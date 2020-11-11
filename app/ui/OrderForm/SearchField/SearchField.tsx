@@ -2,16 +2,16 @@ import React, { useState, useCallback } from "react";
 
 import { Autocomplete, TextField } from "@shopify/polaris";
 
-interface option {
+interface Option {
   value: string;
   label: string;
 }
 
 interface Props {
-  initialOptions: option[];
+  initialOptions: Option[];
   fieldType: string;
-  setSelectedOption: (option: string) => void;
-  selectedOption: string | null;
+  setSelectedOption: (option: Option) => void;
+  selectedOption: Option | null;
 }
 
 export default function SearchField({
@@ -22,7 +22,7 @@ export default function SearchField({
 }: Props) {
   const [selectedLabel, setSelectedLabel] = useState<string>("");
   const [inputValue, setInputValue] = useState("");
-  const [options, setOptions] = useState<option[]>(initialOptions);
+  const [options, setOptions] = useState<Option[]>(initialOptions);
   const [focused, setFocused] = useState(false);
 
   const updateText = useCallback(
@@ -51,7 +51,7 @@ export default function SearchField({
       return matchedOption && matchedOption.label;
     });
 
-    setSelectedOption(selected[0]);
+    setSelectedOption({ value: selected[0], label: selectedValue[0] });
     setSelectedLabel(selectedValue[0]);
     setInputValue("");
   };
