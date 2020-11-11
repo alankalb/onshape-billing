@@ -1,10 +1,17 @@
 # frozen_string_literal: true
 class OnshapeRequestService < ApplicationService
-  def initialize
-    @method = "GET"
+  def initialize(params)
+    @method = params[:method] || "GET"
+    @email = params[:email]
+    @permissions = params[:permissions]
+    @documentId = params[:documentId]
     @path = "/api/documents"
     @query = ""
     @content_type = "application/json"
+
+    if @method == "POST"
+      @path = "/api/documents/#{@documentId}/share"
+    end
   end
 
   def execute
@@ -17,6 +24,7 @@ class OnshapeRequestService < ApplicationService
     else
       response = HTTParty.post(uri, {
         headers: headers,
+        body: request_body.to_json
     } )
     end
 
@@ -25,7 +33,7 @@ class OnshapeRequestService < ApplicationService
 
   private
 
-  attr_reader :method, :path, :query, :content_type, :onNonce, :current_date
+  attr_reader :method, :path, :query, :content_type, :onNonce, :current_date, :email, :permissions, :documentId
 
   def headers
     {
@@ -34,6 +42,20 @@ class OnshapeRequestService < ApplicationService
       "Authorization" => authorization,
       "Accept" => "application/vnd.onshape.v1+json",
       "Content-Type" => content_type,
+    }
+  end
+
+  def request_body
+    {
+      documentId: documentId,
+        permissionSet: permissions,
+        entries: [
+          {
+            entryType: 0,
+            email: email
+          }
+        ],
+        update: true
     }
   end
 
