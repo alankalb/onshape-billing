@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 
 import {
   Button,
+  ButtonGroup,
   Card,
   Form,
   FormLayout,
@@ -15,18 +16,43 @@ import OrderFormQuery, {
   OrderFormQueryData,
 } from "./graphql/OrderFormQuery.graphql";
 
-export default function App() {
-  const [selectedDocument, setSelectedDocument] = useState<string | null>(null);
-  const [selectedCustomer, setSelectedCustomer] = useState<string | null>(null);
-  const [price, setPrice] = useState<string>("");
+import SendInvoiceMutation, {
+  SendInvoiceMutationData,
+} from "./graphql/SendInvoiceMutation.graphql";
 
-  const handleSubmit = () => {
-    console.log(selectedDocument);
-    console.log(selectedCustomer);
-    console.log(price);
-  };
+interface Option {
+  value: string;
+  label: string;
+}
+
+export default function App() {
+  const [selectedDocument, setSelectedDocument] = useState<Option | null>(null);
+  const [selectedCustomer, setSelectedCustomer] = useState<Option | null>(null);
+  const [price, setPrice] = useState<string>("");
+  const [invoiceSending, setInvoiceSending] = useState(false);
+  const [orderId, setOrderId] = useState<string | null>(null);
 
   const { data, loading } = useQuery<OrderFormQueryData>(OrderFormQuery);
+  const [sendInvoiceMutation] = useMutation<SendInvoiceMutationData>(
+    SendInvoiceMutation
+  );
+
+  const handleSubmit = async () => {
+    setInvoiceSending(true);
+    const invoice = await sendInvoiceMutation({
+      variables: {
+        documentId: selectedDocument.value,
+        documentName: selectedDocument.label,
+        customerId: selectedCustomer.value,
+        price: price,
+      },
+    });
+
+    if (invoice.data.sendInvoive.draftId) {
+      setOrderId(invoice.data.sendInvoive.draftId);
+    }
+    setInvoiceSending(false);
+  };
 
   if (loading && !data) {
     return <p>Loading...</p>;
@@ -45,6 +71,16 @@ export default function App() {
       label: customer.name,
     };
   });
+
+  // eslint-disable-next-line multiline-ternary
+  const viewOrderButtonMarkup = orderId ? (
+    <Button
+      external
+      url={`https://onshape-demo.myshopify.com/admin/draft_orders/${orderId}`}
+    >
+      View Invoice
+    </Button>
+  ) : null;
 
   return (
     <Card sectioned>
@@ -81,13 +117,17 @@ export default function App() {
               placeholder={"0.00"}
             />
           </div>
-          <Button
-            submit
-            primary
-            disabled={!selectedDocument || !selectedCustomer}
-          >
-            Send Invoice
-          </Button>
+          <ButtonGroup>
+            <Button
+              submit
+              primary
+              disabled={!selectedDocument || !selectedCustomer}
+              loading={invoiceSending}
+            >
+              Send Invoice
+            </Button>
+            {viewOrderButtonMarkup}
+          </ButtonGroup>
         </FormLayout>
       </Form>
     </Card>

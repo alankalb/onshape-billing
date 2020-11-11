@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 class CreateInvoiceService < ApplicationService
   def initialize(params)
-    @customerId = params[:customerId]
-    @documentId = params[:documentId]
-    @documentName = params[:documentName]
+    @customer_id = params[:customer_id]
+    @document_id = params[:document_id]
+    @document_name = params[:document_name]
     @price = params[:price]
     
   end
 
   def execute
-    return nil if (!customerId || !documentId || !price || !documentName)
+    return nil if (!customer_id || !document_id || !price || !document_name)
 
     ShopifyRequestService.execute
     @draft_order = ShopifyAPI::DraftOrder.new
@@ -19,7 +19,8 @@ class CreateInvoiceService < ApplicationService
     add_metafields
 
     if draft_order.save
-      draft_order.send_invoice
+      invoice = draft_order.send_invoice
+      return draft_order if invoice
     else
       nil
     end
@@ -27,13 +28,13 @@ class CreateInvoiceService < ApplicationService
 
   private
 
-  attr_reader :customerId, :documentId, :price
+  attr_reader :customer_id, :document_id, :document_name, :price
   attr_accessor :draft_order
 
   def add_line_items
     draft_order.line_items = [
       {
-        title: documentName,
+        title: document_name,
         price: price,
         quantity: 1
       }
@@ -45,7 +46,7 @@ class CreateInvoiceService < ApplicationService
       {
         namespace: "onshape",
         key: "document",
-        value: documentId,
+        value: document_id,
         value_type: "string"
       }
     ]
@@ -53,7 +54,7 @@ class CreateInvoiceService < ApplicationService
 
   def add_customer
     draft_order.customer = {
-      id: customerId
+      id: customer_id
     }
   end
 
