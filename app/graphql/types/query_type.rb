@@ -7,7 +7,7 @@ module Types
       description: "All Shopify customers belonging to a shop"
 
     def documents
-      request = OnshapeRequestService.execute
+      request = OnshapeRequestService.execute({})
       request["items"]
     end
 

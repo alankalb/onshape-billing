@@ -5,7 +5,6 @@ class CreateInvoiceService < ApplicationService
     @document_id = params[:document_id]
     @document_name = params[:document_name]
     @price = params[:price]
-    
   end
 
   def execute
@@ -19,6 +18,7 @@ class CreateInvoiceService < ApplicationService
 
     if draft_order.save
       invoice = draft_order.send_invoice
+      OnshapeRequestService.execute({method: "POST", email: customer_email, permissions: ["READ", "COMMENT"], document_id: document_id})
       return draft_order if invoice
     else
       nil
@@ -50,6 +50,10 @@ class CreateInvoiceService < ApplicationService
     draft_order.customer = {
       id: customer_id
     }
+  end
+
+  def customer_email
+    ShopifyAPI::Customer.find(customer_id).email
   end
 
 end
