@@ -4,13 +4,13 @@ class OnshapeRequestService < ApplicationService
     @method = params[:method] || "GET"
     @email = params[:email]
     @permissions = params[:permissions]
-    @documentId = params[:documentId]
+    @document_id = params[:document_id]
     @path = "/api/documents"
     @query = ""
     @content_type = "application/json"
 
     if @method == "POST"
-      @path = "/api/documents/#{@documentId}/share"
+      @path = "/api/documents/#{@document_id}/share"
     end
   end
 
@@ -33,7 +33,7 @@ class OnshapeRequestService < ApplicationService
 
   private
 
-  attr_reader :method, :path, :query, :content_type, :onNonce, :current_date, :email, :permissions, :documentId
+  attr_reader :method, :path, :query, :content_type, :onNonce, :current_date, :email, :permissions, :document_id
 
   def headers
     {
@@ -47,7 +47,7 @@ class OnshapeRequestService < ApplicationService
 
   def request_body
     {
-      documentId: documentId,
+      documentId: document_id,
         permissionSet: permissions,
         entries: [
           {
